@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project SIBUGAY — Digital Glossary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================== RESET & ROOT ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-primary:      #3B6B4A;
+      --color-primary-dark: #2A4E36;
+      --color-primary-light:#EDF5F0;
+      --color-gold:         #B8860B;
+      --color-gold-light:   #FDF6E3;
+      --color-text:         #1A1A1A;
+      --color-text-muted:   #5E5E5E;
+      --color-border:       #D9E5DC;
+      --color-surface:      #F7FAF8;
+      --color-white:        #FFFFFF;
+      --color-danger:       #C0392B;
+      --color-success:      #27AE60;
+      --font-body:          'Inter', sans-serif;
+      --font-serif:         'Noto Serif', serif;
+      --radius-sm:          6px;
+      --radius-md:          10px;
+      --radius-lg:          16px;
+      --shadow-sm:          0 1px 3px rgba(0,0,0,.08);
+      --shadow-md:          0 4px 12px rgba(0,0,0,.10);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a  { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; }
+    img { display: block; max-width: 100%; }
+    ul, ol { list-style: none; }
+
+    /* ===================== HIDDEN UTILITY ===================== */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ===================== LAYOUT SHELL ===================== */
+    .app-shell {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* ===================== TOP NAV ===================== */
+    .topnav {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+    }
+
+    .topnav__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topnav__logo {
+      width: 36px;
+      height: 36px;
+      background: var(--color-gold);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--color-white);
+      letter-spacing: 0.02em;
+    }
+
+    .topnav__title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topnav__title strong {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .topnav__title span {
+      font-size: 11px;
+      opacity: 0.75;
+      letter-spacing: 0.04em;
+    }
+
+    .topnav__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      background: rgba(255,255,255,.15);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--color-white);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: background .15s;
+    }
+
+    .btn-icon:hover { background: rgba(255,255,255,.25); }
+
+    /* ===================== BOTTOM NAV ===================== */
+    .bottomnav {
+      background: var(--color-white);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      align-items: stretch;
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .bottomnav__item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0 10px;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      font-size: 10px;
+      font-family: inherit;
+      letter-spacing: 0.03em;
+      transition: color .15s;
+    }
+
+    .bottomnav__item.active { color: var(--color-primary); }
+
+    .bottomnav__item svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ===================== PAGE VIEWS ===================== */
+    .main-content { overflow-y: auto; }
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    /* ===================== HERO / HOME ===================== */
+    .home-hero {
+      background: linear-gradient(160deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: var(--color-white);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+
+    .home-hero__eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 0.75rem;
+    }
+
+    .home-hero__title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+
+    .home-hero__subtitle {
+      font-size: 13px;
+      opacity: 0.8;
+      max-width: 320px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* ===================== SEARCH BAR ===================== */
+    .search-wrap {
+      padding: 0 1.25rem;
+      margin-top: -20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-border);
+      border-radius: 40px;
+      padding: 0 1rem;
+      box-shadow: var(--shadow-md);
+      gap: 8px;
+    }
+
+    .search-box svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-text-muted);
+      fill: none;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      padding: 14px 0;
+      background: transparent;
+      color: var(--color-text);
+    }
+
+    .search-box input::placeholder { color: var(--color-text-muted); }
+
+    .search-box__lang-toggle {
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--color-surface);
+      color: var(--color-primary);
+      white-space: nowrap;
+    }
+
+    /* ===================== STATS ROW ===================== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 1.25rem;
+    }
+
+    .stat-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.875rem;
+      text-align: center;
+    }
+
+    .stat-card__number {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-primary);
+      font-family: var(--font-serif);
+      line-height: 1;
+    }
+
+    .stat-card__label {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ===================== SECTION HEADER ===================== */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .section-header a { font-size: 12px; color: var(--color-primary); }
+
+    /* ===================== CATEGORY CHIPS ===================== */
+    .chips-scroll {
+      display: flex;
+      gap: 8px;
+      padding: 0 1.25rem 1.25rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .chips-scroll::-webkit-scrollbar { display: none; }
+
+    .chip {
+      border: 1.5px solid var(--color-border);
+      border-radius: 40px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      background: var(--color-white);
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+
+    .chip.active, .chip:hover {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    /* ===================== WORD CARDS ===================== */
+    .word-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 0;
+    }
+
+    .word-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 1.25rem;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      transition: background .12s;
+    }
+
+    .word-card:first-child { border-top: 1px solid var(--color-border); }
+    .word-card:hover { background: var(--color-surface); }
+
+    .word-card__alpha {
+      width: 36px;
+      height: 36px;
+      background: var(--color-primary-light);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .word-card__body { flex: 1; min-width: 0; }
+
+    .word-card__term {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.3;
+    }
+
+    .word-card__pos {
+      font-size: 10px;
+      color: var(--color-gold);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-left: 6px;
+    }
+
+    .word-card__translations {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .word-card__lang-tag {
+      font-weight: 500;
+      color: var(--color-primary-dark);
+    }
+
+    .word-card__actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-audio {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-primary);
+      background: none;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-audio svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .btn-chevron {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: none;
+      color: var(--color-text-muted);
+    }
+
+    .btn-chevron svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* ===================== WORD DETAIL PANEL ===================== */
+    .detail-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      flex-direction: column;
+      background: var(--color-surface);
+    }
+
+    .detail-panel.open { display: flex; }
+
+    .detail-panel__topbar {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      height: 56px;
+      gap: 12px;
+    }
+
+    .btn-back {
+      border: none;
+      background: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      color: var(--color-primary);
+    }
+
+    .btn-back svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .detail-panel__topbar h2 {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .detail-panel__scroll { flex: 1; overflow-y: auto; }
+
+    .detail-hero {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: 1.75rem 1.5rem 2rem;
+    }
+
+    .detail-hero__word {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .detail-hero__meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    .badge--pos  { background: rgba(255,255,255,.2); color: var(--color-white); }
+    .badge--lang { background: var(--color-gold);    color: var(--color-white); }
+
+    .btn-audio-lg {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.15);
+      border: 1.5px solid rgba(255,255,255,.4);
+      border-radius: 40px;
+      color: var(--color-white);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+    }
+
+    .btn-audio-lg svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .detail-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    .detail-section {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .detail-section__label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      padding: 10px 14px 6px;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    .detail-section__content { padding: 14px; }
+
+    .translations-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .translation-item__flag  { font-size: 20px; margin-bottom: 4px; }
+    .translation-item__lang  { font-size: 10px; color: var(--color-text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    .translation-item__word  { font-size: 15px; font-weight: 500; color: var(--color-text); margin-top: 2px; }
+
+    .example-sentence {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .example-sentence__translation {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      font-style: normal;
+      font-family: var(--font-body);
+    }
+
+    .cultural-note { font-size: 14px; line-height: 1.75; color: var(--color-text); }
+
+    .etymology-tag {
+      display: inline-block;
+      background: var(--color-gold-light);
+      border: 1px solid #DEB84A;
+      color: #7A5C00;
+      border-radius: var(--radius-sm);
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    /* ===================== ACTIVITIES VIEW ===================== */
+    .quiz-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: 1.5rem 1.25rem 1.25rem;
+    }
+
+    .quiz-header__eyebrow { font-size: 11px; opacity: 0.75; letter-spacing: 0.06em; text-transform: uppercase; }
+    .quiz-header h2       { font-family: var(--font-serif); font-size: 20px; margin-top: 4px; }
+
+    .progress-bar {
+      margin-top: 1rem;
+      background: rgba(255,255,255,.25);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar__fill {
+      background: var(--color-white);
+      height: 100%;
+      border-radius: 3px;
+      width: 40%;
+      transition: width .3s;
+    }
+
+    .quiz-body { padding: 1.5rem 1.25rem; }
+
+    .quiz-question {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-question__prompt {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .quiz-question__word {
+      font-family: var(--font-serif);
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .quiz-question__lang {
+      font-size: 11px;
+      color: var(--color-primary);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+    .quiz-option {
+      width: 100%;
+      padding: 14px 1.25rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-white);
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--color-text);
+      text-align: left;
+      transition: all .15s;
+    }
+
+    .quiz-option:hover   { border-color: var(--color-primary); color: var(--color-primary); }
+    .quiz-option.correct { border-color: var(--color-success); background: #EAF7EE; color: #1A6638; }
+    .quiz-option.wrong   { border-color: var(--color-danger);  background: #FDECEA; color: #8B1A1A; }
+
+    .activity-type-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 1.25rem;
+    }
+
+    .activity-card {
+      background: var(--color-white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+      transition: all .15s;
+      cursor: pointer;
+    }
+
+    .activity-card:hover { border-color: var(--color-primary); }
+
+    .activity-card__icon  { font-size: 28px; margin-bottom: 8px; }
+    .activity-card__title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .activity-card__desc  { font-size: 11px; color: var(--color-text-muted); line-height: 1.4; }
+
+    /* ===================== BROWSE VIEW ===================== */
+    .alpha-index {
+      position: sticky;
+      top: 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: 8px 1.25rem;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .alpha-index::-webkit-scrollbar { display: none; }
+
+    .alpha-btn {
+      min-width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background: var(--color-white);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alpha-btn.active { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-white); }
+
+    .alpha-section-label {
+      padding: 8px 1.25rem 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-primary);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===================== PROFILE / SETTINGS ===================== */
+    .profile-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: 2rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      border: 3px solid rgba(255,255,255,.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 12px;
+    }
+
+    .profile-header h2 { font-size: 18px; font-weight: 600; }
+    .profile-header p  { font-size: 13px; opacity: 0.75; margin-top: 2px; }
+
+    .settings-list {
+      margin: 1.25rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .settings-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .settings-item:last-child { border-bottom: none; }
+
+    .settings-item__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .settings-item__body { flex: 1; }
+    .settings-item__label { font-size: 14px; font-weight: 500; }
+    .settings-item__desc  { font-size: 12px; color: var(--color-text-muted); margin-top: 1px; }
+
+    .toggle {
+      width: 42px;
+      height: 24px;
+      background: var(--color-border);
+      border-radius: 12px;
+      position: relative;
+      border: none;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+
+    .toggle.on { background: var(--color-primary); }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: left .2s;
+    }
+
+    .toggle.on::after { left: 21px; }
+
+    .lang-selector {
+      display: flex;
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .lang-option {
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      color: var(--color-text-muted);
+      font-family: inherit;
+    }
+
+    .lang-option.active { background: var(--color-primary); color: white; }
+
+    /* ===================== PADDING BOTTOM ===================== */
+    .pb-nav { padding-bottom: 80px; }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (min-width: 640px) {
+      .app-shell { max-width: 480px; margin: 0 auto; box-shadow: 0 0 40px rgba(0,0,0,.12); }
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ========== TOP NAV ========== -->
+  <nav class="topnav" role="navigation" aria-label="Main navigation">
+    <div class="topnav__brand">
+      <div class="topnav__logo" aria-hidden="true">SB</div>
+      <div class="topnav__title">
+        <strong>Project SIBUGAY</strong>
+        <span>Digital Glossary</span>
+      </div>
+    </div>
+    <div class="topnav__actions">
+      <button class="btn-icon" aria-label="Notifications">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
+      </button>
+      <button class="btn-icon" aria-label="Open search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z" /></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content" id="main-content">
+
+    <!-- ===== HOME VIEW ===== -->
+    <section class="page-view active pb-nav" id="view-home" aria-label="Home">
+
+      <div class="home-hero">
+        <p class="home-hero__eyebrow">Subanen / Kolibugan · Filipino · English</p>
+        <h1 class="home-hero__title">Glosaryo ng<br>Katutubong Wika</h1>
+        <p class="home-hero__subtitle">Explore and preserve the language and cultural heritage of the Subanen and Kolibugan peoples of Zamboanga Sibugay.</p>
+      </div>
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <div class="search-box" role="search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z" /></svg>
+          <input type="search" placeholder="Search any word…" aria-label="Search words" id="search-input" />
+          <button class="search-box__lang-toggle" aria-label="Change search language">SUB · FIL · EN</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row" aria-label="Glossary statistics">
+        <div class="stat-card">
+          <div class="stat-card__number">300+</div>
+          <div class="stat-card__label">Words</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">3</div>
+          <div class="stat-card__label">Languages</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">12</div>
+          <div class="stat-card__label">Categories</div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="section-header">
+        <h2>Browse by category</h2>
+        <a href="#" role="button">See all</a>
+      </div>
+      <div class="chips-scroll" role="list" aria-label="Word categories">
+        <button class="chip active" role="listitem">All words</button>
+        <button class="chip" role="listitem">Nature &amp; Land</button>
+        <button class="chip" role="listitem">Beliefs &amp; Rituals</button>
+        <button class="chip" role="listitem">Family &amp; Kinship</button>
+        <button class="chip" role="listitem">Food &amp; Farming</button>
+        <button class="chip" role="listitem">Body &amp; Health</button>
+        <button class="chip" role="listitem">Oral Traditions</button>
+        <button class="chip" role="listitem">Governance</button>
+        <button class="chip" role="listitem">Trade &amp; Craft</button>
+      </div>
+
+      <!-- Word List -->
+      <div class="section-header">
+        <h2>Recently added</h2>
+        <a href="#" role="button">View all</a>
+      </div>
+
+      <ul class="word-list" aria-label="Word entries">
+
+        <li class="word-card" role="listitem">
+          <div class="word-card__alpha" aria-hidden="true">G</div>
+          <div class="word-card__body">
+            <div class="word-card__term">Gukom <span class="word-card__pos">noun</span></div>
+            <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Pinuno ng tribu · <span class="word-card__lang-tag">EN:</span> Tribal elder / leader</div>
+          </div>
+          <div class="word-card__actions">
+            <button class="btn-audio" aria-label="Play pronunciation of Gukom">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+            </button>
+            <button class="btn-chevron" aria-label="View full entry for Gukom" onclick="openDetail('Gukom')">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+          </div>
+        </li>
+
+        <li class="word-card" role="listitem">
+          <div class="word-card__alpha" aria-hidden="true">B</div>
+          <div class="word-card__body">
+            <div class="word-card__term">Bulak <span class="word-card__pos">noun</span></div>
+            <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Bulaklak / kapas · <span class="word-card__lang-tag">EN:</span> Flower / cotton</div>
+          </div>
+          <div class="word-card__actions">
+            <button class="btn-audio" aria-label="Play pronunciation of Bulak">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+            </button>
+            <button class="btn-chevron" aria-label="View full entry for Bulak" onclick="openDetail('Bulak')">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+          </div>
+        </li>
+
+        <li class="word-card" role="listitem">
+          <div class="word-card__alpha" aria-hidden="true">T</div>
+          <div class="word-card__body">
+            <div class="word-card__term">Tul-id <span class="word-card__pos">adj.</span></div>
+            <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Tuwid / tapat · <span class="word-card__lang-tag">EN:</span> Straight / honest</div>
+          </div>
+          <div class="word-card__actions">
+            <button class="btn-audio" aria-label="Play pronunciation of Tul-id">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+            </button>
+            <button class="btn-chevron" aria-label="View full entry for Tul-id" onclick="openDetail('Tul-id')">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+          </div>
+        </li>
+
+        <li class="word-card" role="listitem">
+          <div class="word-card__alpha" aria-hidden="true">D</div>
+          <div class="word-card__body">
+            <div class="word-card__term">Diwata <span class="word-card__pos">noun</span></div>
+            <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Espiritu ng kalikasan · <span class="word-card__lang-tag">EN:</span> Nature spirit / deity</div>
+          </div>
+          <div class="word-card__actions">
+            <button class="btn-audio" aria-label="Play pronunciation of Diwata">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+            </button>
+            <button class="btn-chevron" aria-label="View full entry for Diwata" onclick="openDetail('Diwata')">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+          </div>
+        </li>
+
+      </ul>
+
+    </section><!-- /view-home -->
+
+
+    <!-- ===== BROWSE VIEW ===== -->
+    <section class="page-view pb-nav" id="view-browse" aria-label="Browse all words">
+
+      <nav class="alpha-index" aria-label="Jump to letter">
+        <button class="alpha-btn active">A</button>
+        <button class="alpha-btn">B</button>
+        <button class="alpha-btn">D</button>
+        <button class="alpha-btn">G</button>
+        <button class="alpha-btn">I</button>
+        <button class="alpha-btn">K</button>
+        <button class="alpha-btn">L</button>
+        <button class="alpha-btn">M</button>
+        <button class="alpha-btn">N</button>
+        <button class="alpha-btn">O</button>
+        <button class="alpha-btn">P</button>
+        <button class="alpha-btn">S</button>
+        <button class="alpha-btn">T</button>
+        <button class="alpha-btn">U</button>
+        <button class="alpha-btn">W</button>
+      </nav>
+
+      <div id="browse-list">
+        <p class="alpha-section-label">— A —</p>
+        <ul class="word-list">
+          <li class="word-card">
+            <div class="word-card__alpha">A</div>
+            <div class="word-card__body">
+              <div class="word-card__term">Amay <span class="word-card__pos">noun</span></div>
+              <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Ama · <span class="word-card__lang-tag">EN:</span> Father</div>
+            </div>
+            <div class="word-card__actions">
+              <button class="btn-audio" aria-label="Play Amay"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+              <button class="btn-chevron" aria-label="View Amay" onclick="openDetail('Amay')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
+            </div>
+          </li>
+          <li class="word-card">
+            <div class="word-card__alpha">A</div>
+            <div class="word-card__body">
+              <div class="word-card__term">Apu <span class="word-card__pos">noun</span></div>
+              <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Lolo / Lola · <span class="word-card__lang-tag">EN:</span> Grandparent</div>
+            </div>
+            <div class="word-card__actions">
+              <button class="btn-audio" aria-label="Play Apu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+              <button class="btn-chevron" aria-label="View Apu" onclick="openDetail('Apu')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
+            </div>
+          </li>
+        </ul>
+
+        <p class="alpha-section-label">— B —</p>
+        <ul class="word-list">
+          <li class="word-card">
+            <div class="word-card__alpha">B</div>
+            <div class="word-card__body">
+              <div class="word-card__term">Bulak <span class="word-card__pos">noun</span></div>
+              <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Bulaklak · <span class="word-card__lang-tag">EN:</span> Flower</div>
+            </div>
+            <div class="word-card__actions">
+              <button class="btn-audio" aria-label="Play Bulak"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+              <button class="btn-chevron" aria-label="View Bulak" onclick="openDetail('Bulak')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
+            </div>
+          </li>
+        </ul>
+
+        <p class="alpha-section-label">— G —</p>
+        <ul class="word-list">
+          <li class="word-card">
+            <div class="word-card__alpha">G</div>
+            <div class="word-card__body">
+              <div class="word-card__term">Gukom <span class="word-card__pos">noun</span></div>
+              <div class="word-card__translations"><span class="word-card__lang-tag">FIL:</span> Pinuno ng tribu · <span class="word-card__lang-tag">EN:</span> Tribal elder</div>
+            </div>
+            <div class="word-card__actions">
+              <button class="btn-audio" aria-label="Play Gukom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+              <button class="btn-chevron" aria-label="View Gukom" onclick="openDetail('Gukom')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </section><!-- /view-browse -->
+
+
+    <!-- ===== ACTIVITIES VIEW ===== -->
+    <section class="page-view pb-nav" id="view-activities" aria-label="Learning activities">
+
+      <div class="quiz-header">
+        <p class="quiz-header__eyebrow">Mini Activities</p>
+        <h2>Practice &amp; Learn</h2>
+      </div>
+
+      <!-- Activity type grid -->
+      <div class="activity-type-list" id="activity-menu" role="list" aria-label="Choose an activity">
+
+        <div class="activity-card" role="listitem" tabindex="0" onclick="showQuiz()" onkeydown="if(event.key==='Enter')showQuiz()">
+          <div class="activity-card__icon">🔤</div>
+          <div class="activity-card__title">Word match</div>
+          <div class="activity-card__desc">Match the word to its correct translation</div>
+        </div>
+
+        <div class="activity-card" role="listitem" tabindex="0">
+          <div class="activity-card__icon">🔊</div>
+          <div class="activity-card__title">Listen &amp; pick</div>
+          <div class="activity-card__desc">Hear the word, choose the meaning</div>
+        </div>
+
+        <div class="activity-card" role="listitem" tabindex="0">
+          <div class="activity-card__icon">✏️</div>
+          <div class="activity-card__title">Fill in blanks</div>
+          <div class="activity-card__desc">Complete the sentence using the right word</div>
+        </div>
+
+        <div class="activity-card" role="listitem" tabindex="0">
+          <div class="activity-card__icon">🃏</div>
+          <div class="activity-card__title">Flashcards</div>
+          <div class="activity-card__desc">Flip cards to study word meanings</div>
+        </div>
+
+      </div>
+
+      <!-- Quiz panel (shown after activity chosen) -->
+      <div id="quiz-panel" style="display:none; padding: 0 1.25rem 2rem;">
+
+        <div class="quiz-question" aria-live="polite">
+          <p class="quiz-question__prompt">What does this word mean?</p>
+          <p class="quiz-question__word" id="quiz-word">Gukom</p>
+          <p class="quiz-question__lang">Subanen / Kolibugan</p>
+        </div>
+
+        <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress">
+          <div class="progress-bar__fill"></div>
+        </div>
+        <p style="font-size:11px; color:var(--color-text-muted); text-align:right; margin:6px 0 1rem;">2 / 5</p>
+
+        <div class="quiz-options" id="quiz-options" role="list" aria-label="Answer choices">
+          <button class="quiz-option" role="listitem">Tribal elder / leader</button>
+          <button class="quiz-option" role="listitem">Nature spirit</button>
+          <button class="quiz-option" role="listitem">Sacred forest</button>
+          <button class="quiz-option" role="listitem">Harvest festival</button>
+        </div>
+
+        <button onclick="hideQuiz()" style="margin-top:1.5rem; width:100%; padding:12px; border:1.5px solid var(--color-border); border-radius:var(--radius-md); background:none; font-family:inherit; font-size:14px; color:var(--color-text-muted);">
+          &larr; Back to activities
+        </button>
+
+      </div>
+
+    </section><!-- /view-activities -->
+
+
+    <!-- ===== PROFILE / SETTINGS VIEW ===== -->
+    <section class="page-view pb-nav" id="view-profile" aria-label="Profile and settings">
+
+      <div class="profile-header">
+        <div class="avatar" aria-hidden="true">👤</div>
+        <h2>Student / Teacher</h2>
+        <p>IP-ED Program · Zamboanga Sibugay</p>
+      </div>
+
+      <!-- Progress summary -->
+      <div class="stats-row" aria-label="Learning progress">
+        <div class="stat-card">
+          <div class="stat-card__number">48</div>
+          <div class="stat-card__label">Words learned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">7</div>
+          <div class="stat-card__label">Day streak</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">92%</div>
+          <div class="stat-card__label">Quiz accuracy</div>
+        </div>
+      </div>
+
+      <!-- App settings -->
+      <div class="section-header" style="margin-top:.5rem">
+        <h2>App settings</h2>
+      </div>
+
+      <div class="settings-list" role="list">
+
+        <div class="settings-item" role="listitem">
+          <div class="settings-item__icon" style="background:#EDF5F0;" aria-hidden="true">🌐</div>
+          <div class="settings-item__body">
+            <div class="settings-item__label">Interface language</div>
+            <div class="settings-item__desc">Choose your display language</div>
+          </div>
+          <div class="lang-selector" role="group" aria-label="Interface language">
+            <button class="lang-option active" aria-pressed="true">FIL</button>
+            <button class="lang-option" aria-pressed="false">EN</button>
+          </div>
+        </div>
+
+        <div class="settings-item" role="listitem">
+          <div class="settings-item__icon" style="background:#FDF6E3;" aria-hidden="true">🔊</div>
+          <div class="settings-item__body">
+            <div class="settings-item__label">Audio autoplay</div>
+            <div class="settings-item__desc">Play pronunciation when a word opens</div>
+          </div>
+          <button class="toggle on" aria-pressed="true" aria-label="Toggle audio autoplay" onclick="this.classList.toggle('on'); this.setAttribute('aria-pressed', this.classList.contains('on'))"></button>
+        </div>
+
+        <div class="settings-item" role="listitem">
+          <div class="settings-item__icon" style="background:#F0F0FF;" aria-hidden="true">🌙</div>
+          <div class="settings-item__body">
+            <div class="settings-item__label">Dark mode</div>
+            <div class="settings-item__desc">Switch to a darker color scheme</div>
+          </div>
+          <button class="toggle" aria-pressed="false" aria-label="Toggle dark mode" onclick="this.classList.toggle('on'); this.setAttribute('aria-pressed', this.classList.contains('on'))"></button>
+        </div>
+
+        <div class="settings-item" role="listitem">
+          <div class="settings-item__icon" style="background:#FDE8E8;" aria-hidden="true">📶</div>
+          <div class="settings-item__body">
+            <div class="settings-item__label">Offline mode</div>
+            <div class="settings-item__desc">Download glossary for offline use</div>
+          </div>
+          <button class="toggle" aria-pressed="false" aria-label="Toggle offline mode" onclick="this.classList.toggle('on'); this.setAttribute('aria-pressed', this.classList.contains('on'))"></button>
+        </div>
+
+      </div>
+
+      <!-- About -->
+      <div class="section-header" style="margin-top:.5rem">
+        <h2>About</h2>
+      </div>
+
+      <div class="settings-list" role="list">
+        <div class="settings-item" role="listitem">
+          <div class="settings-item__icon" style="background:#EDF5F0;" aria-hidden="true">📖</div>
+          <div class="settings-item__body">
+            <div class="settings-item__label">About this project</div>
+            <div class="settings-item__desc">WMSU · Pasgala &amp; Ruing · 2025</div>
+          </div>
+          <button class="btn-chevron" aria-label="Learn more about this project">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+          </button>
+        </div>
+        <div class="settings-item" role="listitem">
+          <div class="settings-item__icon" style="background:#EDF5F0;" aria-hidden="true">🛡️</div>
+          <div class="settings-item__body">
+            <div class="settings-item__label">Ethical data use</div>
+            <div class="settings-item__desc">All words validated by Gukom elders</div>
+          </div>
+          <button class="btn-chevron" aria-label="Read ethical data policy">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+          </button>
+        </div>
+      </div>
+
+    </section><!-- /view-profile -->
+
+  </main><!-- /main-content -->
+
+
+  <!-- ========== BOTTOM NAV ========== -->
+  <nav class="bottomnav" role="navigation" aria-label="App sections">
+
+    <button class="bottomnav__item active" aria-current="page" aria-label="Home" onclick="navigate('home', this)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+      Home
+    </button>
+
+    <button class="bottomnav__item" aria-label="Browse all words" onclick="navigate('browse', this)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+      Browse
+    </button>
+
+    <button class="bottomnav__item" aria-label="Learning activities" onclick="navigate('activities', this)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" /></svg>
+      Activities
+    </button>
+
+    <button class="bottomnav__item" aria-label="Profile and settings" onclick="navigate('profile', this)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+      Profile
+    </button>
+
+  </nav>
+
+</div><!-- /app-shell -->
+
+
+<!-- ========== WORD DETAIL PANEL ========== -->
+<div class="detail-panel" id="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-heading">
+
+  <div class="detail-panel__topbar">
+    <button class="btn-back" onclick="closeDetail()" aria-label="Go back">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <h2 id="detail-heading">Word Detail</h2>
+    <button class="btn-icon" style="background:var(--color-primary-light); color:var(--color-primary);" aria-label="Save to favorites">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+    </button>
+  </div>
+
+  <div class="detail-panel__scroll">
+
+    <div class="detail-hero">
+      <div class="detail-hero__word" id="detail-word">Gukom</div>
+      <div class="detail-hero__meta">
+        <span class="badge badge--pos">noun</span>
+        <span class="badge badge--lang">Subanen · Kolibugan</span>
+      </div>
+      <button class="btn-audio-lg" aria-label="Play pronunciation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+        Play pronunciation
+      </button>
+    </div>
+
+    <div class="detail-body">
+
+      <!-- Translations -->
+      <div class="detail-section">
+        <div class="detail-section__label">Translations</div>
+        <div class="detail-section__content">
+          <div class="translations-grid">
+            <div class="translation-item">
+              <div class="translation-item__flag">🇵🇭</div>
+              <div class="translation-item__lang">Filipino</div>
+              <div class="translation-item__word">Pinuno ng tribu</div>
+            </div>
+            <div class="translation-item">
+              <div class="translation-item__flag">🇬🇧</div>
+              <div class="translation-item__lang">English</div>
+              <div class="translation-item__word">Tribal elder / leader</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Definition -->
+      <div class="detail-section">
+        <div class="detail-section__label">Definition</div>
+        <div class="detail-section__content">
+          <p style="font-size:14px; line-height:1.75; color:var(--color-text);">
+            A <em>Gukom</em> is a respected elder or recognized leader within the Subanen or Kolibugan community. The Gukom holds authority in matters of customary law, land governance, rituals, and conflict resolution. Their word carries deep cultural and spiritual weight.
+          </p>
+        </div>
+      </div>
+
+      <!-- Example sentence -->
+      <div class="detail-section">
+        <div class="detail-section__label">Example sentence</div>
+        <div class="detail-section__content">
+          <p class="example-sentence">"Ang Gukom ay nagtipon upang pag-usapan ang karapatan sa lupa ng tribu."</p>
+          <p class="example-sentence__translation">The Gukom gathered to discuss the tribe's land rights.</p>
+        </div>
+      </div>
+
+      <!-- Cultural context -->
+      <div class="detail-section">
+        <div class="detail-section__label">Cultural context</div>
+        <div class="detail-section__content">
+          <p class="cultural-note">
+            In Subanen society, the Gukom system is the backbone of indigenous governance. Decisions about communal resources, marriage, and rituals are made collectively by the Gukom council. Disrespecting a Gukom is considered a serious cultural offense. This role has been validated and documented with the blessing of community elders in Zamboanga Sibugay.
+          </p>
+        </div>
+      </div>
+
+      <!-- Etymology -->
+      <div class="detail-section">
+        <div class="detail-section__label">Etymology</div>
+        <div class="detail-section__content">
+          <span class="etymology-tag">Proto-Austronesian root</span>
+          <p style="font-size:13px; line-height:1.75; color:var(--color-text-muted);">
+            Derived from the root word <em>ukom</em>, meaning "to judge" or "to govern." The prefix <em>gu-</em> elevates it to a title of authority — one who governs.
+          </p>
+        </div>
+      </div>
+
+      <!-- Category tags -->
+      <div>
+        <div style="font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--color-text-muted); margin-bottom:8px;">Categories</div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="chip active" style="font-size:11px; padding:4px 10px;">Governance</span>
+          <span class="chip active" style="font-size:11px; padding:4px 10px;">Community</span>
+          <span class="chip active" style="font-size:11px; padding:4px 10px;">Deep words</span>
+        </div>
+      </div>
+
+    </div><!-- /detail-body -->
+  </div><!-- /detail-panel__scroll -->
+
+</div><!-- /detail-panel -->
+
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+  /* --- View navigation --- */
+  function navigate(viewId, btn) {
+    document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.bottomnav__item').forEach(b => {
+      b.classList.remove('active');
+      b.removeAttribute('aria-current');
+    });
+    document.getElementById('view-' + viewId).classList.add('active');
+    btn.classList.add('active');
+    btn.setAttribute('aria-current', 'page');
+  }
+
+  /* --- Word detail panel --- */
+  function openDetail(word) {
+    const panel = document.getElementById('detail-panel');
+    document.getElementById('detail-heading').textContent = word;
+    document.getElementById('detail-word').textContent = word;
+    panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.btn-back').focus();
+  }
+
+  function closeDetail() {
+    document.getElementById('detail-panel').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDetail();
+  });
+
+  /* --- Activities / Quiz --- */
+  function showQuiz() {
+    document.getElementById('activity-menu').style.display = 'none';
+    document.getElementById('quiz-panel').style.display = 'block';
+  }
+
+  function hideQuiz() {
+    document.getElementById('quiz-panel').style.display = 'none';
+    document.getElementById('activity-menu').style.display = 'grid';
+    document.querySelectorAll('.quiz-option').forEach(b => {
+      b.classList.remove('correct', 'wrong');
+      b.disabled = false;
+    });
+  }
+
+  /* Quiz option selection — first option is correct in this demo */
+  document.querySelectorAll('.quiz-option').forEach((btn, i) => {
+    btn.addEventListener('click', function () {
+      if (this.disabled) return;
+      document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+      if (i === 0) {
+        this.classList.add('correct');
+      } else {
+        this.classList.add('wrong');
+        document.querySelectorAll('.quiz-option')[0].classList.add('correct');
+      }
+    });
+  });
+
+  /* Alpha index */
+  document.querySelectorAll('.alpha-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  /* Lang selector in settings */
+  document.querySelectorAll('.lang-selector').forEach(selector => {
+    selector.querySelectorAll('.lang-option').forEach(opt => {
+      opt.addEventListener('click', function () {
+        selector.querySelectorAll('.lang-option').forEach(o => {
+          o.classList.remove('active');
+          o.setAttribute('aria-pressed', 'false');
+        });
+        this.classList.add('active');
+        this.setAttribute('aria-pressed', 'true');
+      });
+    });
+  });
+
+  /* Category chip toggle */
+  document.querySelectorAll('.chips-scroll .chip').forEach(chip => {
+    chip.addEventListener('click', function () {
+      document.querySelectorAll('.chips-scroll .chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

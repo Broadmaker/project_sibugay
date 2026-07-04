@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Project SIBUGAY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../public/css/styles.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<div class="admin-layout">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <div class="sidebar__title">SIBUGAY</div>
+      <div class="sidebar__subtitle">Admin Console</div>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="#" class="sidebar__link active" data-view="dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+        Dashboard
+      </a>
+      <a href="#" class="sidebar__link" data-view="entries">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        Dictionary Entries
+      </a>
+      <a href="#" class="sidebar__link" data-view="add">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+        Add New Word
+      </a>
+      <a href="#" class="sidebar__link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        System Settings
+      </a>
+    </nav>
+    <div style="padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+      <a href="../public/index.html" class="sidebar__link" style="padding:0; color:var(--color-gold);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+        Back to Public App
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <main class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header__title" id="pageTitle">Dashboard</div>
+      <div style="display:flex; align-items:center; gap: 1rem;">
+        <span style="font-size: 13px; font-weight: 500;">Admin Researcher</span>
+        <div class="avatar" style="width: 36px; height: 36px; font-size: 16px; margin:0; border:none; background: var(--color-primary-light); color: var(--color-primary);">👨‍💻</div>
+      </div>
+    </header>
+
+    <div class="admin-content" id="admin-content">
+      <!-- Content injected by JS -->
+    </div>
+  </main>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- TEMPLATES -->
+
+<!-- Dashboard Template -->
+<template id="tpl-dashboard">
+  <div class="admin-stats">
+    <div class="stat-card">
+      <div class="stat-card__number">312</div>
+      <div class="stat-card__label">Total Words</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__number" style="color:var(--color-gold)">14</div>
+      <div class="stat-card__label">Pending Review</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__number">45</div>
+      <div class="stat-card__label">Words with Audio</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__number">3</div>
+      <div class="stat-card__label">Active Admins</div>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h3 style="margin-bottom: 1rem;">Recent Activity</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Word</th>
+          <th>Action</th>
+          <th>Researcher</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Gukom</strong></td>
+          <td><span style="color:var(--color-success)">Added Audio</span></td>
+          <td>Jess Pasgala</td>
+          <td>Just now</td>
+        </tr>
+        <tr>
+          <td><strong>Bulak</strong></td>
+          <td>Updated Definition</td>
+          <td>Rani Ruing</td>
+          <td>2 hours ago</td>
+        </tr>
+        <tr>
+          <td><strong>Diwata</strong></td>
+          <td><span style="color:var(--color-success)">New Entry</span></td>
+          <td>Jess Pasgala</td>
+          <td>Yesterday</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+    <div style="margin-top:2.5rem; padding:2rem; background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg);">
+      <h3 style="margin-bottom:10px; font-size:16px;">Research & Documentation</h3>
+      <p style="font-size:13px; color:var(--color-text-muted); margin-bottom:20px; max-width:600px;">Generate linguistic datasets for external research, language comparison, and archival. Datasets include geolocations, dialects, and full translation history.</p>
+      <div style="display:flex; gap:12px;">
+        <button class="btn-outline" style="background:white;" onclick="window.showToast('📊 Generating Excel Dataset...')">Export Data to Excel</button>
+        <button class="btn-outline" style="background:white;" onclick="window.showToast('📄 Generating PDF Report...')">Export Summary to PDF</button>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<!-- Entries Template -->
+<template id="tpl-entries">
+  <div class="admin-card">
+    <div class="flex-between">
+      <div style="display:flex; gap: 1rem; align-items:center;">
+        <input type="text" class="form-control" placeholder="Search entries..." style="width: 250px;">
+        <select class="form-control" style="width: 150px;">
+          <option>All Categories</option>
+          <option>Nature</option>
+          <option>Rituals</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="switchView('add')">+ Add New</button>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Term</th>
+          <th>Filipino</th>
+          <th>English</th>
+          <th>Status</th>
+          <th>Audio</th>
+          <th style="text-align:right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Gukom</strong></td>
+          <td>Pinuno ng tribu</td>
+          <td>Tribal elder</td>
+          <td><span class="status-badge approved">Validated</span></td>
+          <td>✅</td>
+          <td style="text-align:right">
+            <button class="action-btn" aria-label="Edit">✏️</button>
+            <button class="action-btn delete" aria-label="Delete">🗑️</button>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Bulak</strong></td>
+          <td>Bulaklak</td>
+          <td>Flower</td>
+          <td><span class="status-badge approved">Validated</span></td>
+          <td>✅</td>
+          <td style="text-align:right">
+            <button class="action-btn" aria-label="Edit">✏️</button>
+            <button class="action-btn delete" aria-label="Delete">🗑️</button>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Tul-id</strong></td>
+          <td>Tuwid</td>
+          <td>Straight</td>
+          <td><span class="status-badge pending">Pending</span></td>
+          <td>❌</td>
+          <td style="text-align:right">
+            <button class="action-btn" aria-label="Edit">✏️</button>
+            <button class="action-btn delete" aria-label="Delete">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<!-- Add New Template -->
+<template id="tpl-add">
+  <div class="admin-card" style="max-width: 800px;">
+    <h3 style="margin-bottom: 1.5rem;">Add New Dictionary Entry</h3>
+    <form id="addWordForm" onsubmit="event.preventDefault(); window.showToast('✅ Word saved successfully! It is pending Gukom validation.'); switchView('entries');">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Indigenous Term (Subanen / Kolibugan)</label>
+          <input type="text" class="form-control" required placeholder="e.g. Gukom">
+        </div>
+        
+        <div class="form-group">
+          <label>Filipino Translation</label>
+          <input type="text" class="form-control" required placeholder="e.g. Pinuno ng tribu">
+        </div>
+        <div class="form-group">
+          <label>English Translation</label>
+          <input type="text" class="form-control" required placeholder="e.g. Tribal elder">
+        </div>
+
+        <div class="form-group">
+          <label>Part of Speech</label>
+          <select class="form-control">
+            <option>Noun</option>
+            <option>Verb</option>
+            <option>Adjective</option>
+            <option>Adverb</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select class="form-control">
+            <option>Governance</option>
+            <option>Nature & Land</option>
+            <option>Beliefs & Rituals</option>
+            <option>Family & Kinship</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label>Definition & Cultural Context</label>
+          <textarea class="form-control" required placeholder="Explain the cultural significance of this word..."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <label>Upload Audio Pronunciation</label>
+          <div style="border: 2px dashed var(--color-border); padding: 2rem; text-align:center; border-radius: var(--radius-md);">
+            <p style="font-size:13px; color:var(--color-text-muted); margin-bottom: 10px;">Drag and drop audio file here, or click to browse.</p>
+            <button type="button" class="btn-outline">Select .MP3 File</button>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:flex; justify-content:flex-end; gap: 1rem; margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
+        <button type="button" class="btn-outline" onclick="switchView('entries')">Cancel</button>
+        <button type="submit" class="btn-primary">Save Entry</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+  // Simple view router for Admin
+  const contentArea = document.getElementById('admin-content');
+  const pageTitle = document.getElementById('pageTitle');
+  
+  function switchView(viewName) {
+    const tpl = document.getElementById('tpl-' + viewName);
+    if(tpl) {
+      contentArea.innerHTML = tpl.innerHTML;
+    }
+    
+    // Update Title
+    const titles = {
+      'dashboard': 'Dashboard',
+      'entries': 'Dictionary Entries',
+      'add': 'Add New Word'
+    };
+    pageTitle.textContent = titles[viewName] || 'Admin';
+
+    // Update Nav
+    document.querySelectorAll('.sidebar__link').forEach(link => {
+      if(link.dataset.view) {
+        link.classList.toggle('active', link.dataset.view === viewName);
+      }
+    });
+  }
+
+  // Bind sidebar nav
+  document.querySelectorAll('.sidebar__link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const view = e.currentTarget.dataset.view;
+      if (view) {
+        e.preventDefault();
+        switchView(view);
+      }
+    });
+  });
+
+  // Global Toast Function (copied from app.js)
+  window.showToast = function(message) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    container.appendChild(toast);
+    
+    requestAnimationFrame(() => toast.classList.add('show'));
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  };
+
+  // Init
+  switchView('dashboard');
+</script>
+</body>
+</html>

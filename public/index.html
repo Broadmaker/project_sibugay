@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project SIBUGAY — Digital Glossary</title>
+  <meta name="theme-color" content="#3B6B4A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="onboarding-overlay" id="onboarding" style="display:none;">
+  <div class="onboarding-slides" id="onboarding-slides">
+    <div class="onboarding-slide">
+      <div class="onboarding-slide__icon">📖</div>
+      <h1 class="onboarding-slide__title">Welcome to Project SIBUGAY</h1>
+      <p class="onboarding-slide__desc">A digital glossary dedicated to preserving the Subanen and Kolibugan languages of Zamboanga Sibugay — for the community, by the community.</p>
+    </div>
+    <div class="onboarding-slide">
+      <div class="onboarding-slide__icon">🏞️</div>
+      <h1 class="onboarding-slide__title">Who We Are</h1>
+      <p class="onboarding-slide__desc">The Subanen and Kolibugan peoples are the indigenous communities of Zamboanga Sibugay. Their languages carry centuries of wisdom, customary law, oral traditions, and a deep connection to the land.</p>
+    </div>
+    <div class="onboarding-slide">
+      <div class="onboarding-slide__icon">🌱</div>
+      <h1 class="onboarding-slide__title">What You Can Do</h1>
+      <p class="onboarding-slide__desc">Browse words, listen to pronunciations, take quizzes, study with flashcards, explore cultural heritage, and contribute to keeping these languages alive for future generations.</p>
+    </div>
+  </div>
+
+  <div class="onboarding-dots" id="onboarding-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+
+  <div class="onboarding-footer">
+    <button class="onboarding-btn onboarding-btn--skip" id="onboarding-skip">Skip</button>
+    <button class="onboarding-btn onboarding-btn--next" id="onboarding-next">Next</button>
+  </div>
+</div>
+
+<div class="splash-screen" id="splash-screen">
+  <div class="splash-logo">SB</div>
+  <div class="splash-sub">Project SIBUGAY</div>
+  <div class="splash-tagline">Subanen · Kolibugan · Filipino · English</div>
+  <div class="splash-phrase">"Preserving Indigenous Voices"</div>
+</div>
+
+
+<div class="app-shell">
+
+  <!-- ========== TOP NAV ========== -->
+  <nav class="topnav" role="navigation" aria-label="Main navigation">
+    <div class="topnav__brand">
+      <div class="topnav__logo" aria-hidden="true">SB</div>
+      <div class="topnav__title">
+        <strong>Project SIBUGAY</strong>
+        <span>Digital Glossary</span>
+      </div>
+    </div>
+    <div class="topnav__actions">
+      <button class="btn-icon" aria-label="Notifications">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
+      </button>
+      <button class="btn-icon" aria-label="Open search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z" /></svg>
+      </button>
+    </div>
+
+  </nav>
+
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content" id="main-content"></main>
+
+  <!-- ========== BOTTOM NAV ========== -->
+  <nav class="bottomnav" role="navigation" aria-label="App sections">
+    <button class="bottomnav__item active" aria-current="page" aria-label="Home" data-page="home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+      Home
+    </button>
+    <button class="bottomnav__item" aria-label="Browse all words" data-page="browse">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+      Browse
+    </button>
+    <button class="bottomnav__item" aria-label="Learning activities" data-page="activities">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" /></svg>
+      Activities
+    </button>
+    <button class="bottomnav__item" aria-label="Cultural Heritage" data-page="culture">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 12l-3-3m3 3l3-3m-3 3v8" /></svg>
+      Culture
+    </button>
+    <button class="bottomnav__item" aria-label="Profile and settings" data-page="profile">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+      Profile
+    </button>
+  </nav>
+
+</div>
+
+<!-- ========== WORD DETAIL PANEL (global overlay) ========== -->
+<div class="detail-panel" id="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-heading">
+  <div class="detail-panel__topbar">
+    <button class="btn-back" onclick="closeDetail()" aria-label="Go back">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <h2 id="detail-heading">Word Detail</h2>
+    <button class="btn-icon btn-icon--fav" aria-label="Save to favorites">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+    </button>
+  </div>
+  <div class="detail-panel__scroll" id="detail-content">
+    <!-- Word detail content loaded dynamically -->
+  </div>
+</div>
+
+
+<!-- ========== AUTH MODAL ========== -->
+<div class="auth-panel" id="auth-panel" role="dialog" aria-modal="true" aria-labelledby="auth-heading">
+  <div class="auth-panel__backdrop" onclick="window.closeAuth()"></div>
+  <div class="auth-panel__sheet">
+    <div class="auth-panel__topbar">
+      <h2 id="auth-heading">Sign In</h2>
+      <button class="btn-close-auth" onclick="window.closeAuth()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+
+    <!-- Tab: Login / Sign Up -->
+    <div class="auth-tabs" role="tablist">
+      <button class="auth-tab active" role="tab" aria-selected="true" data-auth-tab="login" onclick="window.switchAuthTab('login')">Sign In</button>
+      <button class="auth-tab" role="tab" aria-selected="false" data-auth-tab="signup" onclick="window.switchAuthTab('signup')">Create Account</button>
+    </div>
+
+    <!-- Login Form -->
+    <form class="auth-form auth-form--active" id="auth-form-login" onsubmit="return window.doLogin(event)">
+      <div class="auth-field">
+        <label for="login-email" class="auth-label">Email</label>
+        <input type="email" id="login-email" class="auth-input" placeholder="you@example.com" value="learner@example.com" required>
+      </div>
+      <div class="auth-field">
+        <label for="login-password" class="auth-label">Password</label>
+        <input type="password" id="login-password" class="auth-input" placeholder="Enter password" value="password" required>
+      </div>
+      <div class="auth-row">
+        <label class="auth-checkbox">
+          <input type="checkbox" id="login-remember" checked> Remember me
+        </label>
+        <button type="button" class="auth-link" onclick="window.showToast('📧 Password reset link sent to your email')">Forgot password?</button>
+      </div>
+      <button type="submit" class="btn-primary w-full justify-center mt-lg">Sign In</button>
+      <p class="auth-hint mt-md">Demo: try <strong>rani@example.com</strong> (contributor), <strong>jess@example.com</strong> (elder), <strong>admin@example.com</strong> (admin), or <strong>maria@example.com</strong> (learner). Password is <strong>password</strong>.</p>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form class="auth-form" id="auth-form-signup" onsubmit="return window.doSignup(event)">
+      <div class="auth-field">
+        <label for="signup-name" class="auth-label">Full name</label>
+        <input type="text" id="signup-name" class="auth-input" placeholder="Juan Dela Cruz" required>
+      </div>
+      <div class="auth-field">
+        <label for="signup-email" class="auth-label">Email</label>
+        <input type="email" id="signup-email" class="auth-input" placeholder="you@example.com" required>
+      </div>
+      <div class="auth-field">
+        <label for="signup-password" class="auth-label">Password</label>
+        <input type="password" id="signup-password" class="auth-input" placeholder="Create a password" required>
+      </div>
+      <div class="auth-field">
+        <label for="signup-role" class="auth-label">I want to join as</label>
+        <select id="signup-role" class="auth-input">
+          <option value="learner">Learner — browse, study, take quizzes</option>
+          <option value="contributor">Contributor — submit words, audio, stories</option>
+          <option value="elder">Elder / Validator — review &amp; approve submissions</option>
+          <option value="admin">Researcher / Admin — full dictionary management</option>
+        </select>
+      </div>
+      <div class="auth-field">
+        <label for="signup-program" class="auth-label">School / Organization (optional)</label>
+        <input type="text" id="signup-program" class="auth-input" placeholder="e.g. WMSU, IP-ED Program">
+      </div>
+      <button type="submit" class="btn-primary w-full justify-center mt-lg">Create Account</button>
+    </form>
+
+    <!-- Guest mode -->
+    <div class="auth-guest">
+      <span class="auth-divider">or</span>
+      <button class="btn-outline w-full justify-center" onclick="window.loginAsGuest()">Continue as Guest</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STORY READER MODAL ========== -->
+<div class="story-reader" id="story-reader" role="dialog" aria-modal="true">
+  <div class="story-reader__topbar">
+    <button class="btn-back" onclick="window.closeStoryReader()" aria-label="Go back">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <h2 id="story-reader-title">Story</h2>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="story-reader__scroll" id="story-reader-content"></div>
+</div>
+
+<!-- ========== MEDIA VIEWER MODAL ========== -->
+<div class="media-viewer" id="media-viewer" role="dialog" aria-modal="true">
+  <div class="media-viewer__topbar">
+    <button class="btn-back" style="color:#fff;" onclick="window.closeMediaViewer()" aria-label="Go back">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <h2 id="media-viewer-title">Media</h2>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="media-viewer__body" id="media-viewer-body"></div>
+  <div class="media-viewer__status" id="media-viewer-status"></div>
+</div>
+
+<!-- ========== REPORT ISSUE MODAL ========== -->
+<div class="contribute-form-overlay" id="report-form" role="dialog" aria-modal="true">
+  <div class="auth-panel__backdrop" onclick="window.closeReportForm()"></div>
+  <div class="auth-panel__sheet">
+    <div class="auth-panel__topbar">
+      <h2>Report an Issue</h2>
+      <button class="btn-close-auth" onclick="window.closeReportForm()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+    <form onsubmit="return window.submitReport(event)">
+      <div class="auth-field">
+        <label class="auth-label">Issue type</label>
+        <select id="report-type" class="auth-input">
+          <option value="correction">Incorrect translation</option>
+          <option value="spelling">Spelling or pronunciation error</option>
+          <option value="context">Cultural context needs review</option>
+          <option value="missing">Missing information</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="auth-field">
+        <label for="report-desc" class="auth-label">Describe the issue</label>
+        <textarea id="report-desc" class="auth-input" rows="5" placeholder="Please provide as much detail as possible..." style="resize:vertical;min-height:80px;font-family:inherit;" required></textarea>
+      </div>
+      <div class="auth-field">
+        <label for="report-email" class="auth-label">Your email (optional)</label>
+        <input type="email" id="report-email" class="auth-input" placeholder="In case we need to follow up">
+      </div>
+      <button type="submit" class="btn-primary w-full justify-center">Submit Report</button>
+      <p class="text-xs text-muted text-center mt-sm">Reports are reviewed by the editorial team and Gukom council.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ========== VERSION HISTORY MODAL ========== -->
+<div class="contribute-form-overlay" id="version-modal" role="dialog" aria-modal="true">
+  <div class="auth-panel__backdrop" onclick="window.closeVersionHistory()"></div>
+  <div class="auth-panel__sheet">
+    <div class="auth-panel__topbar">
+      <h2>Version History</h2>
+      <button class="btn-close-auth" onclick="window.closeVersionHistory()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+    <div id="version-history-body"></div>
+  </div>
+</div>
+
+<!-- ========== CONTRIBUTION FORM MODAL ========== -->
+<div class="contribute-form-overlay" id="contribute-form" role="dialog" aria-modal="true">
+  <div class="auth-panel__backdrop" onclick="window.closeContributeForm()"></div>
+  <div class="auth-panel__sheet">
+    <div class="auth-panel__topbar">
+      <h2>Contribute to Glossary</h2>
+      <button class="btn-close-auth" onclick="window.closeContributeForm()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+    <form id="contribute-form-body" onsubmit="return window.submitContribution(event)">
+      <div class="auth-field">
+        <label class="auth-label">Contribution type</label>
+        <select id="contribute-type" class="auth-input">
+          <option value="word">New word / term</option>
+          <option value="audio">Audio recording</option>
+          <option value="story">Cultural story / proverb</option>
+          <option value="photo">Photo / image</option>
+          <option value="correction">Correction to existing entry</option>
+        </select>
+      </div>
+      <div class="auth-field">
+        <label for="contribute-title" class="auth-label">Title / Word</label>
+        <input type="text" id="contribute-title" class="auth-input" placeholder="Enter the word or title" required>
+      </div>
+      <div class="auth-field">
+        <label for="contribute-desc" class="auth-label">Description / Details</label>
+        <textarea id="contribute-desc" class="auth-input" rows="4" placeholder="Provide as much detail as possible..." style="resize:vertical;min-height:80px;font-family:inherit;"></textarea>
+      </div>
+      <div class="auth-field">
+        <label for="contribute-name" class="auth-label">Your name (optional)</label>
+        <input type="text" id="contribute-name" class="auth-input" placeholder="How should we credit you?">
+      </div>
+      <button type="submit" class="btn-primary w-full justify-center">Submit for Review</button>
+      <p class="text-xs text-muted text-center mt-sm">All submissions are reviewed by the Gukom council before publication.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ========== ABOUT MODAL ========== -->
+<div class="contribute-form-overlay" id="about-modal" role="dialog" aria-modal="true">
+  <div class="auth-panel__backdrop" onclick="window.closeAbout()"></div>
+  <div class="auth-panel__sheet">
+    <div class="auth-panel__topbar">
+      <h2>About This Project</h2>
+      <button class="btn-close-auth" onclick="window.closeAbout()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+    <div class="about-content">
+      <div class="about-section">
+        <h3>Project SIBUGAY</h3>
+        <p>A digital glossary dedicated to preserving the Subanen and Kolibugan languages of Zamboanga Sibugay, Philippines. Developed in collaboration with community elders, educators, and researchers to ensure accuracy, cultural sensitivity, and community ownership.</p>
+      </div>
+      <div class="about-section">
+        <h3>Why It Matters</h3>
+        <p>Indigenous languages in the Philippines are disappearing at an alarming rate. Project SIBUGAY aims to document, teach, and celebrate the linguistic heritage of the Subanen and Kolibugan peoples — not as a museum artifact, but as a living, growing resource for students, elders, and community members.</p>
+      </div>
+      <div class="about-section">
+        <h3>WMSU · IP-ED Program</h3>
+        <p>This project is supported by the Western Mindanao State University (WMSU) Indigenous Peoples Education (IP-ED) Program, in partnership with the Gukom Council of Elders, local schools, and community leaders across Zamboanga Sibugay.</p>
+      </div>
+      <div class="about-section">
+        <h3>Credits</h3>
+        <p><strong>Jess Pasgala</strong> — Researcher &amp; Community Coordinator<br>
+        <strong>Rani Ruing</strong> — Language Specialist &amp; Cultural Documentation<br>
+        <strong>Gukom Council</strong> — Elders and Validators<br>
+        <strong>WMSU IP-ED Program</strong> — Institutional Support</p>
+        <p class="about-version">Version 1.0.0 · 2025</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ETHICAL DATA MODAL ========== -->
+<div class="contribute-form-overlay" id="ethical-modal" role="dialog" aria-modal="true">
+  <div class="auth-panel__backdrop" onclick="window.closeEthical()"></div>
+  <div class="auth-panel__sheet">
+    <div class="auth-panel__topbar">
+      <h2>Ethical Data Use Policy</h2>
+      <button class="btn-close-auth" onclick="window.closeEthical()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+    <div class="about-content">
+      <div class="about-section">
+        <h3>Community Consent</h3>
+        <p>All entries in this glossary have been reviewed and approved for public sharing by the Gukom Council of Elders. Words marked as "culturally sensitive" contain additional context about their restricted status. No entry is included without the informed consent of community knowledge-keepers.</p>
+      </div>
+      <div class="about-section">
+        <h3>Attribution &amp; Ownership</h3>
+        <p>Each entry is attributed to its contributor and validator. The cultural knowledge itself remains the intellectual property of the Subanen and Kolibugan communities. This glossary is intended for educational, non-commercial use. Any reproduction or adaptation must be reviewed by the Gukom Council.</p>
+      </div>
+      <div class="about-section">
+        <h3>Privacy</h3>
+        <p>User accounts store only the information you provide (name, email, role). Activity data (quiz scores, words viewed) is stored locally on your device and is not shared with third parties. We do not track, sell, or monetize user data.</p>
+      </div>
+      <div class="about-section">
+        <h3>Content Accuracy</h3>
+        <p>We strive for accuracy, but language is living and evolving. If you find an error or have a correction, please use the "Report an issue" feature on the relevant entry. All corrections are reviewed by the editorial team and the Gukom Council.</p>
+      </div>
+      <div class="about-section">
+        <h3>FPIC (Free, Prior and Informed Consent)</h3>
+        <p>The development of this glossary follows FPIC principles as outlined in the Indigenous Peoples Rights Act (IPRA) of 1997. Community engagement and consent are ongoing processes, not one-time events.</p>
+      </div>
+      <div class="about-section">
+        <h3>Contact</h3>
+        <p>For questions about data use, content, or community engagement, please reach out through the WMSU IP-ED Program office.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATES FOR OFFLINE MODE -->
+
+<!-- Culture Template -->
+<template id="tpl-culture">
+<section class="page-view active pb-nav" id="view-culture" aria-label="Culture">
+  <div class="page-header p-lg">
+    <h1 class="font-serif text-2xl font-semibold text-primary">Cultural Heritage</h1>
+    <p class="text-sm text-muted mt-xs">Preserving the Subanen & Kolibugan identity</p>
+  </div>
+
+  <!-- Map Module -->
+  <div class="section-header mt-md">
+    <h2>Geographic Map</h2>
+  </div>
+  <div id="culture-map" class="culture-map-wrap mb-xl"></div>
+
+  <!-- Multimedia / Video Module -->
+  <div class="section-header">
+    <h2>Multimedia Learning</h2>
+  </div>
+  <div id="culture-media" class="horizontal-scroll mb-xl"></div>
+
+  <!-- Oral Traditions -->
+  <div class="section-header">
+    <h2>Oral Traditions</h2>
+  </div>
+  <div id="culture-stories" class="story-list mb-xl"></div>
+
+  <!-- Cultural Calendar -->
+  <div class="section-header">
+    <h2>Cultural Calendar</h2>
+  </div>
+  <div id="culture-events" class="event-scroll mb-xl"></div>
+
+  <!-- Community Contribution -->
+  <div class="section-header mt-xl">
+    <h2>Contribute</h2>
+  </div>
+  <div class="contribution-card" style="margin:0 1.25rem 2rem;">
+    <h3 class="text-base text-primary-dark font-semibold mb-sm">Share your heritage</h3>
+    <p class="text-sm text-muted mb-lg">Submit photos, audio recordings, stories, or correct an entry. All contributions are reviewed by the Gukom council.</p>
+    <button class="btn-primary w-full justify-center" data-action="open-contribute">Open Contribution Form</button>
+  </div>
+</section>
+</template>
+
+<template id="tpl-home">
+<section class="page-view active pb-nav" id="view-home" aria-label="Home">
+
+  <div class="home-hero">
+    <p class="home-hero__eyebrow">Subanen / Kolibugan · Filipino · English</p>
+    <h1 class="home-hero__title">Glosaryo ng<br>Katutubong Wika</h1>
+    <p class="home-hero__subtitle">Explore and preserve the language and cultural heritage of the Subanen and Kolibugan peoples of Zamboanga Sibugay.</p>
+  </div>
+
+  <div class="search-wrap">
+    <div class="search-box" role="search">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z" /></svg>
+      <input type="search" placeholder="Search any word…" aria-label="Search words" id="search-input" />
+      <button class="search-box__lang-toggle" aria-label="Change search language">SUB · FIL · EN</button>
+    </div>
+  </div>
+
+  <div id="recent-searches" class="recent-searches" style="display:none;"></div>
+
+  <div id="wotd-container"></div>
+
+  <div class="stats-row" aria-label="Glossary statistics" id="stats-container"></div>
+
+  <div class="section-header">
+    <h2>Browse by category</h2>
+    <a href="javascript:void(0);" role="button" id="see-all-categories">See all</a>
+  </div>
+
+  <div class="chips-scroll" role="list" aria-label="Word categories" id="category-chips"></div>
+
+  <div class="section-header">
+    <h2>Recently added</h2>
+    <a href="javascript:void(0);" role="button" id="view-all-words">View all</a>
+  </div>
+
+  <ul class="word-list" aria-label="Word entries" id="recent-words"></ul>
+
+</section>
+</template>
+
+<template id="tpl-browse">
+<section class="page-view active pb-nav" id="view-browse" aria-label="Browse all words">
+
+  <div class="sort-bar" id="sort-bar">
+    <button class="sort-btn active" data-sort="alpha">A–Z</button>
+    <button class="sort-btn" data-sort="views">Most viewed</button>
+    <button class="sort-btn" data-sort="recent">Recently added</button>
+  </div>
+
+  <nav class="alpha-index" aria-label="Jump to letter" id="alpha-nav"></nav>
+
+  <div id="browse-list"></div>
+
+</section>
+</template>
+
+<template id="tpl-activities">
+<section class="page-view active pb-nav" id="view-activities" aria-label="Learning activities">
+
+  <!-- Daily Streak -->
+  <div id="activities-streak" class="streak-bar"></div>
+
+  <div class="quiz-header">
+    <p class="quiz-header__eyebrow">Practice &amp; Learn</p>
+    <h2>Learning Activities</h2>
+  </div>
+
+  <!-- Difficulty selector -->
+  <div class="difficulty-selector" id="difficulty-selector">
+    <button class="difficulty-btn active" data-diff="beginner">Beginner</button>
+    <button class="difficulty-btn" data-diff="intermediate">Intermediate</button>
+    <button class="difficulty-btn" data-diff="advanced">Advanced</button>
+  </div>
+
+  <!-- Activity Menu -->
+  <div class="activity-type-list" id="activity-menu" role="list" aria-label="Choose an activity">
+    <div class="activity-card" role="listitem" tabindex="0" data-action="show-quiz">
+      <div class="activity-card__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+      </div>
+      <div class="activity-card__title">Word match</div>
+      <div class="activity-card__desc">Pick the correct translation</div>
+    </div>
+    <div class="activity-card" role="listitem" tabindex="0" data-action="show-flashcards">
+      <div class="activity-card__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+      </div>
+      <div class="activity-card__title">Flashcards</div>
+      <div class="activity-card__desc">Flip &amp; study word meanings</div>
+    </div>
+  </div>
+
+  <!-- Quiz Panel -->
+  <div id="quiz-panel" class="hidden page-section" style="padding-bottom:2rem;">
+    <div id="quiz-active">
+      <div class="quiz-question" aria-live="polite">
+        <p class="quiz-question__prompt">What does this word mean?</p>
+        <p class="quiz-question__word" id="quiz-word">---</p>
+        <p class="quiz-question__lang" id="quiz-lang">---</p>
+      </div>
+
+      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress">
+        <div class="progress-bar__fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="text-xs text-muted text-right mt-sm mb-lg" id="quiz-counter">0 / 0</p>
+
+      <div class="quiz-options" id="quiz-options" role="list" aria-label="Answer choices"></div>
+    </div>
+
+    <div id="quiz-result" class="result-screen hidden">
+      <div class="result-icon" id="result-icon">🏆</div>
+      <h2 id="result-heading">Great Job!</h2>
+      <p class="text-muted mb-sm">You scored <span id="quiz-score" class="font-semibold" style="color:var(--color-text);">0/0</span>.</p>
+      <p class="text-xs text-muted mb-lg" id="result-perfect"></p>
+      <div id="result-breakdown" class="result-breakdown"></div>
+    </div>
+
+    <button data-action="hide-quiz" class="btn-back-page">&larr; Back to activities</button>
+  </div>
+
+  <!-- Flashcard Panel -->
+  <div id="flashcard-panel" class="hidden" style="padding:0 1.25rem 2rem;">
+    <div class="flashcard-header">
+      <p class="text-xs text-muted" id="flashcard-counter">1 / 12</p>
+    </div>
+    <div class="flashcard-container" id="flashcard-container">
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <div class="flashcard__word" id="fc-word">---</div>
+            <div class="flashcard__dialect" id="fc-dialect">---</div>
+            <div class="flashcard__hint">Tap to flip</div>
+          </div>
+          <div class="flashcard__back">
+            <div class="flashcard__trans" id="fc-trans">---</div>
+            <div class="flashcard__def" id="fc-def">---</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flashcard-actions">
+      <button class="btn-outline" id="fc-prev" disabled>Previous</button>
+      <button class="btn-primary" id="fc-next">Next</button>
+    </div>
+    <button data-action="hide-flashcards" class="btn-back-page">&larr; Back to activities</button>
+  </div>
+
+</section>
+
+</template>
+
+<template id="tpl-profile">
+<section class="page-view active pb-nav" id="view-profile" aria-label="Profile and settings" data-profile-section>
+  <!-- populated by renderProfile() -->
+</section>
+</template>
+
+<template id="tpl-word-detail">
+<div class="detail-hero">
+  <div class="detail-hero__word" id="detail-word">{{WORD}}</div>
+  <div class="detail-hero__meta">
+    <span class="badge badge--pos">noun</span>
+    <span class="badge badge--lang">Subanen · Kolibugan</span>
+  </div>
+  <button class="btn-audio-lg" aria-label="Play pronunciation">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+    Play pronunciation
+  </button>
+</div>
+
+<div class="detail-body">
+
+  <div class="detail-section">
+    <div class="detail-section__label">Translations</div>
+    <div class="detail-section__content">
+      <div class="translations-grid">
+        <div class="translation-item">
+          <div class="translation-item__flag">🇵🇭</div>
+          <div class="translation-item__lang">Filipino</div>
+          <div class="translation-item__word">Pinuno ng tribu</div>
+        </div>
+        <div class="translation-item">
+          <div class="translation-item__flag">🇬🇧</div>
+          <div class="translation-item__lang">English</div>
+          <div class="translation-item__word">Tribal elder / leader</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <div class="detail-section__label">Definition</div>
+    <div class="detail-section__content">
+      <p class="text-base" style="line-height:1.75;">
+        A <em>{{WORD}}</em> is a respected elder or recognized leader within the Subanen or Kolibugan community. The {{WORD}} holds authority in matters of customary law, land governance, rituals, and conflict resolution. Their word carries deep cultural and spiritual weight.
+      </p>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <div class="detail-section__label">Example sentence</div>
+    <div class="detail-section__content">
+      <p class="example-sentence">"Ang {{WORD}} ay nagtipon upang pag-usapan ang karapatan sa lupa ng tribu."</p>
+      <p class="example-sentence__translation">The {{WORD}} gathered to discuss the tribe's land rights.</p>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <div class="detail-section__label">Cultural context</div>
+    <div class="detail-section__content">
+      <p class="cultural-note">
+        In Subanen society, the {{WORD}} system is the backbone of indigenous governance. Decisions about communal resources, marriage, and rituals are made collectively by the Gukom council. Disrespecting a Gukom is considered a serious cultural offense. This role has been validated and documented with the blessing of community elders in Zamboanga Sibugay.
+      </p>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <div class="detail-section__label">Etymology</div>
+    <div class="detail-section__content">
+      <span class="etymology-tag">Proto-Austronesian root</span>
+      <p class="text-sm text-muted" style="line-height:1.75;">
+        Derived from the root word <em>ukom</em>, meaning "to judge" or "to govern." The prefix <em>gu-</em> elevates it to a title of authority — one who governs.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <div class="text-xs text-muted font-semibold tracking-wider text-uppercase mb-sm">Categories</div>
+    <div class="flex flex-wrap gap-xs">
+      <span class="chip active text-xs" style="padding:4px 10px;">Governance</span>
+      <span class="chip active text-xs" style="padding:4px 10px;">Community</span>
+      <span class="chip active text-xs" style="padding:4px 10px;">Deep words</span>
+    </div>
+  </div>
+
+</div>
+
+</template>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+  <div class="toast-container" id="toast-container"></div>
+</body>
+</html>

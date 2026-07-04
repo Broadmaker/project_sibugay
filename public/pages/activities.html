@@ -1,0 +1,55 @@
+<section class="page-view active pb-nav" id="view-activities" aria-label="Learning activities">
+
+  <div class="quiz-header">
+    <p class="quiz-header__eyebrow">Mini Activities</p>
+    <h2>Practice &amp; Learn</h2>
+  </div>
+
+  <div class="activity-type-list" id="activity-menu" role="list" aria-label="Choose an activity">
+    <div class="activity-card" role="listitem" tabindex="0" data-action="show-quiz">
+      <div class="activity-card__icon">🔤</div>
+      <div class="activity-card__title">Word match</div>
+      <div class="activity-card__desc">Match the word to its correct translation</div>
+    </div>
+    <div class="activity-card" role="listitem" tabindex="0">
+      <div class="activity-card__icon">🔊</div>
+      <div class="activity-card__title">Listen &amp; pick</div>
+      <div class="activity-card__desc">Hear the word, choose the meaning</div>
+    </div>
+    <div class="activity-card" role="listitem" tabindex="0">
+      <div class="activity-card__icon">✏️</div>
+      <div class="activity-card__title">Fill in blanks</div>
+      <div class="activity-card__desc">Complete the sentence using the right word</div>
+    </div>
+    <div class="activity-card" role="listitem" tabindex="0">
+      <div class="activity-card__icon">🃏</div>
+      <div class="activity-card__title">Flashcards</div>
+      <div class="activity-card__desc">Flip cards to study word meanings</div>
+    </div>
+  </div>
+
+  <div id="quiz-panel" style="display:none; padding: 0 1.25rem 2rem;">
+    <div class="quiz-question" aria-live="polite">
+      <p class="quiz-question__prompt">What does this word mean?</p>
+      <p class="quiz-question__word" id="quiz-word">Gukom</p>
+      <p class="quiz-question__lang">Subanen / Kolibugan</p>
+    </div>
+
+    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress">
+      <div class="progress-bar__fill"></div>
+    </div>
+    <p style="font-size:11px; color:var(--color-text-muted); text-align:right; margin:6px 0 1rem;">2 / 5</p>
+
+    <div class="quiz-options" id="quiz-options" role="list" aria-label="Answer choices">
+      <button class="quiz-option" role="listitem">Tribal elder / leader</button>
+      <button class="quiz-option" role="listitem">Nature spirit</button>
+      <button class="quiz-option" role="listitem">Sacred forest</button>
+      <button class="quiz-option" role="listitem">Harvest festival</button>
+    </div>
+
+    <button data-action="hide-quiz" style="margin-top:1.5rem; width:100%; padding:12px; border:1.5px solid var(--color-border); border-radius:var(--radius-md); background:none; font-family:inherit; font-size:14px; color:var(--color-text-muted);">
+      &larr; Back to activities
+    </button>
+  </div>
+
+</section>
